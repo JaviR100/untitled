@@ -2,8 +2,8 @@
   <div>
     <div id="header"></div>
     <div id="main-container">
-      <h2>Todos</h2>
-      <Todos v-bind:todos="copyTodos"/>
+      <h2>Lista de Tareas</h2>
+      <Todos v-bind:todos="copyTodos" v-on:delete="deleter"/>
     </div>
   </div>
 </template>
@@ -18,9 +18,7 @@ import TodosAdd from "@/components/TodosAdd";
 export default {
   name: 'App',
   components: {
-    //Search,
     Todos
-    // TodosAdd
   },
   data () {
       return {
@@ -53,6 +51,12 @@ export default {
   },
   created() {
     this.copyTodos = [...this.todos]
+  },
+  methods: {
+    deleter(id){
+      this.todos = this.todos.filter(todo => todo.id != id)
+      this.copyTodos = [...this.todos]
+    }
   }
 }
 </script>
@@ -63,7 +67,7 @@ export default {
 }
 body{
   font-family: Bitstream Charter, Garuda, sans-serif;
-  font-size: 10px;
+  font-size: 19px;
   padding: 0;
   margin: 0;
 }
