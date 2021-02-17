@@ -3,22 +3,20 @@
     <div id="header"></div>
     <div id="main-container">
       <h2>Lista de Tareas</h2>
+      <TodosAdd v-on:add="addTodo"/>
       <Todos v-bind:todos="copyTodos" v-on:delete="deleter"/>
     </div>
   </div>
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import Search from "@/components/Search";
 import Todos from "@/components/Todos";
-// eslint-disable-next-line no-unused-vars
-import TodosAdd from "@/components/TodosAdd";
+import TodosAdd from "./components/TodosAdd";
 
 export default {
   name: 'App',
   components: {
-    Todos
+    Todos, TodosAdd
   },
   data () {
       return {
@@ -55,6 +53,10 @@ export default {
   methods: {
     deleter(id){
       this.todos = this.todos.filter(todo => todo.id != id)
+      this.copyTodos = [...this.todos]
+    },
+    addTodo(todo){
+      this.todos.push(todo)
       this.copyTodos = [...this.todos]
     }
   }
