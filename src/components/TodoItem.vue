@@ -1,7 +1,9 @@
 <template>
 <div class="todo" v-bind:class="{complete: todo.complete}">
   <div class="todobody" >
-    <input type="checkbox" v-bind:checked="todo.complete? 'checked': ''" v-on:change="checkTodo">
+    <label>
+      <input type="checkbox" v-bind:checked="todo.complete? 'checked': ''" v-on:change="checkTodo">
+    </label>
     {{todo.title}}
   </div>
   <div class="todoaction">
@@ -31,10 +33,7 @@ name: "TodoItem",
 .todo:not(.complete){
   background-color: white;
 }
-.complete{
-  color: darkred;
-  text-decoration: line-through;
-}
+
 .complete .todobody {
   text-decoration: line-through;
 }
