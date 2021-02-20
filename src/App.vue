@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="header">
-      <Search v-on:q/>
+      <Search v-on:query-change="querysearch"/>
     </div>
     <div id="main-container">
       <h2>Lista de Tareas</h2>
@@ -61,6 +61,17 @@ export default {
     addTodo(todo){
       this.todos.push(todo)
       this.copyTodos = [...this.todos]
+    },
+    querysearch(query){
+      if (query.trim() === '')
+        {
+          this.copyTodos = [...this.todos]
+        }
+      else {
+        const search = this.todos.filter(todos => { return todos.title.includes(query)})
+         this.copyTodos = [...search]
+      }
+
     }
   }
 }
