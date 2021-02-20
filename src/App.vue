@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div id="header"></div>
+    <div id="header">
+      <Search v-on:query-change="querysearch"/>
+    </div>
     <div id="main-container">
       <h2>Lista de Tareas</h2>
       <TodosAdd v-on:add="addTodo"/>
@@ -12,11 +14,12 @@
 <script>
 import Todos from "@/components/Todos";
 import TodosAdd from "./components/TodosAdd";
+import Search from "@/components/Search";
 
 export default {
   name: 'App',
   components: {
-    Todos, TodosAdd
+    Todos, TodosAdd, Search
   },
   data () {
       return {
@@ -52,12 +55,23 @@ export default {
   },
   methods: {
     deleter(id){
-      this.todos = this.todos.filter(todo => todo.id != id)
+      this.todos = this.todos.filter(todo => todo.id !== id)
       this.copyTodos = [...this.todos]
     },
     addTodo(todo){
       this.todos.push(todo)
       this.copyTodos = [...this.todos]
+    },
+    querysearch(query){
+      if (query.trim() === '')
+        {
+          this.copyTodos = [...this.todos]
+        }
+      else {
+        const search = this.todos.filter(todos => { return todos.title.includes(query)})
+         this.copyTodos = [...search]
+      }
+
     }
   }
 }
@@ -69,7 +83,7 @@ export default {
 }
 body{
   font-family: Bitstream Charter, Garuda, sans-serif;
-  font-size: 19px;
+  font-size: 13px;
   padding: 0;
   margin: 0;
 }
@@ -80,9 +94,10 @@ body{
 }
 #header{
   background: crimson;
-  padding: 10px;
+  padding: 5px;
 }
 h2{
-  padding: 0 10px;
+  padding: 0 5px;
+  text-align: center;
 }
 </style>
